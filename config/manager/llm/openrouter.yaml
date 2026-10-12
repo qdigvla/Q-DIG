@@ -1,0 +1,3 @@
+_target_: src.model.openrouter.OpenRouterClient
+model_name: "MODEL_HERE"
+key: "YOUR_KEY_HERE"

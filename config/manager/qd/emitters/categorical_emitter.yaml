@@ -1,0 +1,4 @@
+_target_: src.qd.emitters.CategoricalEmitter
+archive_sample_rate: 0.8 # probability at which to sample from the archive. 1-this value is the rate at which we sample from x0
+similarity_req: 0.5 # required similarity to the original prompt
+targeted_exploration: True # whether to target unexplored or low fitness cells in the archive

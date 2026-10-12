@@ -1,0 +1,3 @@
+_target_: src.model.openai.OpenAIClient
+model_name: "gpt-4o-2024-08-06" # model name (see https://platform.openai.com/docs/models)
+key: ""

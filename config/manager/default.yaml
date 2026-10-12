@@ -1,0 +1,19 @@
+# This is passed to Manager class.
+max_evals: 500 # Solutions to evaluate before termination (multiple evals per solution for metric aggregation is considered as one eval when ensuring max_evals).
+plot_metrics_freq: 10 # Positive int `n` to plot metrics after `n` iterations. Always plots at the end.
+reload_save_freq: 1 # Positive int `n` to save reload data after `n` iterations. Always saved at the end.
+archive_save_freq: 5 # -1 to save the full archive at the end. 0 to never save the full archive. Positive int `n` to save it after `n` iterations.
+wandb:
+  enable: false # Set to true to enable wandb logging.
+  project_name: "qd_robotics_safety" # Project name on wandb.
+  entity: safron # If we have a team, its name should be added here.
+  tags: [] # The names of QD algorithm, env, and agent are added as tags by default. Extra tags can be added here.
+
+debug: true
+render: false
+
+defaults:
+  - _self_
+  - qd: rainbow_teaming # QD config. See qd/rainbow_teaming.yaml.
+  - llm: llama_70b_sglang # LLM config. See llm/llama_70b_sglang.yaml
+  - benchmark: LIBERO # Benchmark config. See benchmark/simplerenv

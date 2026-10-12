@@ -1,0 +1,49 @@
+# Consolidated LIBERO benchmark config. Defaults to OpenVLA-OFT loaded
+# in-process (no server to start). For other models, override model_family
+# (and that model's fields below) from the command line / a wrapper script
+# instead of adding another near-duplicate YAML file -- see the
+# "Switching models via `manager/benchmark`" section of the top-level
+# README, and scripts/OpenVLA_QDIG.sh / pi05_ERT.sh / GR00T_Rephrase.sh for
+# worked examples (e.g. `manager.benchmark.env_cfg.model_family=openpi`).
+_target_: src.prompt.envs.libero_manager.LIBEROBenchmark
+n_evals: 10
+preprocess: False # preprocess fix
+env_cfg:
+  center_crop: True # Center crop? (if trained w/ random crop image aug)
+  pretrained_checkpoint: "moojink/openvla-7b-oft-finetuned-libero-goal"
+  model_family: "openvla" # openvla | openvla-server | openpi | gr00t | diffusion
+
+  # LIBERO environment-specific parameters
+  task_suite_name: "libero_goal" # Task suite. Options: libero_spatial, libero_object, libero_goal, libero_10, libero_90
+  unnorm_key: "libero_goal"
+  num_steps_wait: 10 # Number of steps to wait for objects to stabilize in sim
+
+  # openvla / openvla-server specific parameters
+  use_l1_regression: True # If True, uses continuous action head with L1 regression objective
+  use_diffusion: False # If True, uses continuous action head with diffusion modeling objective (DDIM)
+  num_diffusion_steps_train: 50 # (When `diffusion==True`) Number of diffusion steps used for training
+  num_diffusion_steps_inference: 50 # (When `diffusion==True`) Number of diffusion steps used for inference
+  use_film: False # If True, uses FiLM to infuse language inputs into visual features
+  num_images_in_input: 2 # Number of images in the VLA input (default: 1)
+  use_proprio: True # Whether to include proprio state in input
+  num_open_loop_steps: 8 # Number of actions to execute open-loop before requerying policy
+  load_in_8bit: False
+  load_in_4bit: False
+
+  # diffusion specific parameters
+  policy_setup: "libero"
+  action_scale: 1.0
+
+  # openvla-server / openpi / gr00t specific parameters -- remote model
+  # server host/port (only used when model_family is one of these). See
+  # README for how to start each server.
+  host: "0.0.0.0"
+  port: 8777
+  resize_size: 224
+  replan_steps: 5
+
+# starting task id
+task_id: 0
+
+defaults:
+  - _self_

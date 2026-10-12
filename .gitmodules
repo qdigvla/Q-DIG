@@ -1,0 +1,16 @@
+[submodule "LIBERO"]
+	path = LIBERO
+	url = https://github.com/Lifelong-Robot-Learning/LIBERO.git
+[submodule "openpi"]
+	path = openpi
+	url = https://github.com/Physical-Intelligence/openpi.git
+[submodule "SimplerEnv-OpenVLA"]
+	path = SimplerEnv-OpenVLA
+	url = git@github.com:sidsrikanth1/SimplerEnv-OpenVLA.git
+	branch = main
+[submodule "Isaac-GR00T"]
+	path = Isaac-GR00T
+	url = https://github.com/NVIDIA/Isaac-GR00T.git
+[submodule "openvla-oft"]
+	path = openvla-oft
+	url = https://github.com/moojink/openvla-oft.git

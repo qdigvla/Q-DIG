@@ -1,0 +1,41 @@
+# NOTE: see README for torch/flash-attn installation instructions
+
+# openvla
+timm==0.9.10
+tokenizers==0.21.2 # 0.19.1
+torch>=2.2.0
+torchvision>=0.16.0
+transformers==4.53.1 # 4.40.1
+accelerate
+einops
+safetensors
+draccus
+
+# libero
+imageio[ffmpeg]
+robosuite==1.4.1
+bddl
+easydict
+cloudpickle
+gym
+tensorflow
+tf-keras
+matplotlib
+h5py
+mujoco
+robomimic
+egl-probe
+
+# remote model servers (OpenVLA-OFT / openpi / Isaac-GR00T; see README "Running remote
+# model servers")
+flask
+json-numpy
+requests
+msgpack
+
+# misc/prompt team
+hydra-core
+wandb
+openai
+ribs[all]==0.8.1
+sentence-transformers==5.0.0

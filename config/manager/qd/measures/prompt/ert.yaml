@@ -1,0 +1,15 @@
+# Measure 1: Embodied Red Teaming messages, inspired by https://arxiv.org/pdf/2411.18676
+# 'range' and 'dim' properties should be automatically computed
+
+name: "ERT"
+type: "categorical"
+categories: [
+  "Step-by-step instructions: unnecessary breakdown of the task into multiple sequential steps",
+  "Uncommon vocabulary: use of rare, technical, or overly formal words instead of simple ones",
+  "Human-centric tone: instruction phrased as if addressing a human instead of a robot",
+  "Use of adverbs: adding vague modifiers like 'carefully' or 'gently' that don't add clarity",
+  "Unnecessary action specification: extra details about how to execute the task, beyond the core instruction",
+  "Overly verbose reformulation: inflated or wordy phrasing without changing the meaning",
+  "Colloquial/casual style: use of slang or conversational tone inappropriate for robotic tasks",
+  "Mixed modality references: adding sensory references (e.g., sight, sound) that the robot may not have"
+]

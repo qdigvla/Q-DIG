@@ -1,0 +1,79 @@
+# Consolidated SimplerEnv benchmark config. Defaults to OpenVLA loaded
+# in-process (no server to start). For other models, override model_family
+# (and model_kwargs below) from the command line / a wrapper script instead
+# of adding another near-duplicate YAML file -- see the "Switching models
+# via `manager/benchmark`" section of the top-level README (e.g.
+# `manager.benchmark.env_cfg.model_family=openpi
+# manager.benchmark.model_kwargs.host=0.0.0.0
+# manager.benchmark.model_kwargs.port=8000`).
+_target_: src.prompt.envs.simpler_env_manager.SimplerEnvBenchmark
+n_evals: 10
+preprocess: False # preprocess fix
+env_cfg:
+  center_crop: True # Center crop? (if trained w/ random crop image aug)
+  pretrained_checkpoint: "fhliang/google_robot_base_20k"
+
+  model_family: "openvla" # openvla | openvla-server | openpi | gr00t | diffusion
+  policy_setup: "google_robot"
+  action_scale: 1.0
+
+  enable_raytracing: False
+
+  # inference params
+  control_freq: 3
+  sim_freq: 513
+  max_episode_steps: 113
+
+  robot_name: "google_robot_static"
+  scene_name: "google_pick_coke_can_1_v4"
+
+  additional_env_build_kwargs:
+    prepackaged_config: true
+    station_name: "mk_station_recolor"
+    light_mode: "simple"
+
+  # NOTE: overwritten in the code
+  robot_init:
+    x: [0.65, 0.65, 1]
+    y: [0, 0, 1]
+    rot_quat_center: [1, 0, 0, 0]
+    rot_rpy_range: [0, 0, 1, 0, 0, 1, 0, 0, 1]
+
+  # NOTE: overwritten in the code
+  obj_init:
+    x_range: [-0.35, -0.35, 1]
+    y_range: [-0.02, -0.02, 1]
+
+  rgb_overlay_path: "./SimplerEnv-OpenVLA/ManiSkill2_real2sim/data/real_inpainting/open_drawer_a0.png"
+  obs_camera_name: null
+
+# Passed as **model_kwargs to the policy constructor -- the accepted keys
+# depend on model_family, and none of the policy classes accept unknown
+# kwargs, so switching model_family generally requires overriding this
+# whole block too (not just adding a key), e.g.:
+#   manager.benchmark.env_cfg.model_family=openpi \
+#   manager.benchmark.model_kwargs='{host: "0.0.0.0", port: 8000}'
+# openvla (default): use_proprio/use_action_head.
+# openvla-server / openpi / gr00t: host/port of that model's remote
+# inference server (see README "Switching models via `manager/benchmark`").
+model_kwargs:
+  use_proprio: True
+  use_action_head: True
+
+# starting task id
+task_id: 0
+
+# NOTE: we defined these unique scenes ourselves, but did not provide 
+# the code for them. Please refer to the SimplerEnv repo on how to
+# construct the envs or reach out to me (Sid) for the env code :)
+env_names:
+  [
+    "MultiObjectGraspSingleOpenedCokeCanInScene-v0", # coke can
+    "MultiObjectGraspSingleAppleInScene-v0", # apple can
+    "MultiObjectGraspSingleSpongeInScene-v0", # sponge can
+    "MultiObjectOpenTopDrawerCustomInScene-v0", # open top drawer
+    "MultiObjectCloseBottomDrawerCustomInScene-v0" # close bottom drawer
+  ]
+
+defaults:
+  - _self_

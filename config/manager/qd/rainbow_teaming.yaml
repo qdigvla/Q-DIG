@@ -1,0 +1,27 @@
+archive: # dims and range specified in measures/
+  _target_: src.qd.archives.CategoricalArchive
+  solution_dim: 1
+  dtype:
+    solution: "${get_cls: numpy.object_}"
+    objective: "${get_cls: numpy.float32}"
+    measures: "${get_cls: numpy.object_}"
+  record_solution: true
+  record_metadata: true
+
+emitters: ${oc.dict.values:._emitter_dict}
+_emitter_dict:
+  e1:
+    num: 1
+    batch_size: 10 # generate 5 prompts, for each category
+
+measures: ${oc.dict.values:._measure_dict}
+
+scheduler:
+  _target_: src.qd.schedulers.scheduler.Scheduler
+
+defaults:
+  - _self_
+  - emitters@_emitter_dict.e1.type: categorical_emitter
+
+  # measures
+  - measures@_measure_dict.m1: prompt/ert
